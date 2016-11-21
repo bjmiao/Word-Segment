@@ -1,0 +1,8 @@
+1. Train-assistant machines
+  （1）第一遍分词
+  （2）高亮不合适的部分
+  （3）记录分词的结果（给调参数用）
+  
+2. Core Algorithm
+  （1）分数系统
+  （2）调参数
