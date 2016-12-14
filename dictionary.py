@@ -36,19 +36,22 @@ def getdict():
 
         
         
-        ver_file=open('./dict/latest.log','r')
+        ver_file=open('./dict/latest.log','r',encoding='UTF-8')
         ver=ver_file.readline()
         ver=ver.replace('\n','')
 
         url_list=[]
-        url_file=open('./dict/'+ver[:-3]+'log','r')
+        url_file=open('./dict/'+ver[:-3]+'log','r',encoding='UTF-8')
         while True:
                 line=url_file.readline()
                 if (line==''):break;
                 url_list.append(line)
                 
+                print('line=',line)
+                print(url_list)
+                
         
-        dic_file=open('./dict/'+ver,'r')
+        dic_file=open('./dict/'+ver,'r',encoding='UTF-8')
         dic=[]
         while True:
                 line=dic_file.readline()
@@ -118,13 +121,16 @@ def train_one_passage(dic,url_list,text_str):
 
         #check if the url appears in list
         
-        f=open(text_str,'r')
+        f=open(text_str,'r',encoding='UTF-8')
         url=f.readline()
+        while not(str.isalpha(url[0])):url=url[1:]
+        
         if (url in url_list):
                 print('Warning:This article has been trained before')
                 return
         url_list.append(url)
-
+        print(url_list)
+        
         text=f.read()
         word_seq=splitwords(text)
         add_to_dict(dic,word_seq)
@@ -146,7 +152,7 @@ def output_to_dict(dic,url_list):
                                 #print(ele)
                                 ret=ret+ele+':'+str(fix_dict[ele])+','
                         return ret
-                f=open(file_str,'w')
+                f=open(file_str,'w',encoding='UTF-8')
                 for entry in dic:
         #中文|Word|360|Num|简体:290,繁体:60,None:10|Pre|分词:230,自修:100,考试:20,None:10|Suf|
                         f.write("{0}|Word|{1}|Num|{2}|Pre|{3}|Suf|\n"
@@ -155,7 +161,7 @@ def output_to_dict(dic,url_list):
 
         def freshurl(url_list,file_str):
                 """This output new_url_list into a .log file"""
-                f=open(file_str,'w')
+                f=open(file_str,'w',encoding='UTF-8')
                 for ele in url_list:
                         f.write(ele)
                 f.close()
@@ -171,12 +177,6 @@ def output_to_dict(dic,url_list):
         file_str=date_str+'.log'
         freshurl(url_list,"dict/"+file_str)
         
-
-
-
-
 dic,url_list=getdict()
-train_one_passage(dic,url_list,'test.txt')
+train_one_passage(dic,url_list,text_str='corpus/2-std.txt')
 output_to_dict(dic,url_list)
-
-
