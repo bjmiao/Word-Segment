@@ -3,40 +3,47 @@ from tkinter import *
 def main():
     root=Tk()
 
+    head=Frame(root,borderwidth=10)
+    
+    label1=Label(head,text="SourcePath")
+    label1.pack(side=LEFT,)
 
-    x1=Text(width=100,height=40)
-    x1.pack(side=LEFT,padx=10,pady=10)
+
 
     
-    x2=Text(root,width=100,height=40)
-    scroll=Scrollbar(x2,command=x2.yview)
-    color_tag=['']*1000
-    for i in range(11,100):
-        color_tag[i]='#0000'+repr(i);
-        x2.tag_configure('color'+repr(i),foreground=color_tag[i])
-    x2.tag_bind('bite','<1>',
-                lambda e,t=x2:t.insert(END,"I'll bite your legs off!\n"))
-    for i in range(11,100):
-        x2.insert(END,'aaaaa\n','color'+repr(i))
+    SourcePath=StringVar()
+    sp_text=Entry(head,width=40,textvariable=SourcePath)
+    SourcePath.set('SourcePath')
+    sp_text.pack(side=LEFT,)
 
-    button=Button(x2,text='123123')
-    x2.window_create(END,window=button)
+    label2=Label(head,text="SourceFile")
+    label2.pack(side=LEFT,)
 
-    x2.insert(END,'I dare you to click on this\n', 'bite')
+    SourceFile=StringVar()
+    sf_text=Entry(head,width=20,textvariable=SourceFile)
+    SourceFile.set('SourceFile')
+    sf_text.pack(side=LEFT)
+    Botton_Load=Button(head,text='Load')
+    Botton_Load.pack(side=LEFT)
+    head.pack(side=TOP,expand=YES,anchor=NW,fill=X)
     
-    x2.pack(side=LEFT,padx=10,pady=10)
-  #  scroll.pack(side=RIGHT,fill=Y)
+    text_fr=Frame(root,borderwidth=10)
+    text=Text(text_fr,height=50)
+    text.pack(side=TOP,fill=Y)
+    text_fr.pack(expand=YES)
 
+    tail=Frame(root,borderwidth=10)
+    label3=Label(tail,text="TargetFile")
+    label3.pack(side=LEFT,expand=YES,fill=X)
+    TargetFile=StringVar()
+    tf_text=Entry(tail,width=20,textvariable=TargetFile)
+    TargetFile.set('TargetFile')
+    tf_text.pack(side=LEFT,expand=YES,fill=X)
+    Botton_Save=Button(tail,text='Save')
+    Botton_Save.pack(side=LEFT)
 
-
-
-    toolbar=Frame(root)
+    tail.pack(side=TOP)
     
-    b=Button(toolbar,text="Accept",width=6)
-    b.pack(side=LEFT,padx=20,pady=20)
-
-    toolbar.pack(side=TOP,fill=X)
-   
     root.mainloop()
-    
+
 main()
