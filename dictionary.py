@@ -1,6 +1,7 @@
 import string
 punctuation=string.punctuation
 chnpunctuation='，。、？！……：；“‘”’{}【】《》——（）'
+pausepunctuation='，。、？！……：；'
 
 def getdict():
         '''return a tuple(dic, url_list)'''
@@ -47,10 +48,6 @@ def getdict():
                 if (line==''):break;
                 url_list.append(line)
                 
-                print('line=',line)
-                print(url_list)
-                
-        
         dic_file=open('./dict/'+ver,'r',encoding='UTF-8')
         dic=[]
         while True:
@@ -72,6 +69,7 @@ def train_one_passage(dic,url_list,text_str):
                         char=text_list[i]
                         if ((char in punctuation)and not(char=='|')):char_list.append('|')
                         elif ((char=='\n')or(char=='　')or(char==' ')or(char=='\t')):pass
+                        elif (char in pausepunctuation):char_list.append('|'+char+'|')
                         elif (char in chnpunctuation):char_list.append('|')
                         else:char_list.append(char)
 
@@ -129,7 +127,6 @@ def train_one_passage(dic,url_list,text_str):
                 print('Warning:This article has been trained before')
                 return
         url_list.append(url)
-        print(url_list)
         
         text=f.read()
         word_seq=splitwords(text)
