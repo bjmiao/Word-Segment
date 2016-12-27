@@ -173,7 +173,4 @@ def output_to_dict(dic,url_list):
 
         file_str=date_str+'.log'
         freshurl(url_list,"dict/"+file_str)
-        
-dic,url_list=getdict()
-train_one_passage(dic,url_list,text_str='corpus/2-std.txt')
-output_to_dict(dic,url_list)
+
